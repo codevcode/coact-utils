@@ -1,0 +1,48 @@
+{
+  "name": "coact-utils",
+  "version": "0.1.0",
+  "description": "coact utils",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run linter && npm run mocha",
+    "mocha": "mocha src/**/*spec.js --opts mocha.opts",
+    "mocha:watch": "mocha src/**/*spec.js --opts mocha.opts --watch --bail",
+    "linter": "eslint src --fix --ext .js,.jsx",
+    "build": "npm test && rm -r build && babel src --presets es2015,react,stage-0 --ignore __tests__ -d build && cp -t build/ package.json README.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codevcode/coact-utils.git"
+  },
+  "author": "Hsieh, Change-Hsi",
+  "bugs": {
+    "url": "https://github.com/codevcode/coact-utils/issues"
+  },
+  "homepage": "https://github.com/codevcode/coact-utils#readme",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "recompose": "^0.23.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "chai": "^3.5.0",
+    "enzyme": "^2.8.2",
+    "eslint": "^3.19.0",
+    "jsdom": "^10.1.0",
+    "mocha": "^3.3.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-test-render": "^1.0.3",
+    "sinon": "^2.2.0"
+  },
+  "peerDependencies": {
+    "react": "^15.5.4"
+  }
+}
