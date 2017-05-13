@@ -1,7 +1,7 @@
 import getDisplayName from 'recompose/getDisplayName'
 
 
-// ISSUE: withArgs 容易忘記
+// ISSUE: withArgs 容易忘記加
 function setWrappedDisplayName (enhancer, name, withArgs = false) {
   if (withArgs) {
     return (...args) => BaseComp => {
