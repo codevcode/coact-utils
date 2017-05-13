@@ -4,8 +4,10 @@
   "description": "coact utils",
   "main": "index.js",
   "scripts": {
-    "test": "npm run linter && npm run mocha",
+    "test": "npm run linter && set NODE_ENV=production&& npm run mocha && set NODE_ENV=developing&& npm run mocha",
     "mocha": "mocha src/**/*spec.js --opts mocha.opts",
+    "mocha:pdt": "set NODE_ENV=production&& mocha src/**/*spec.js --opts mocha.opts",
+    "mocha:dev": "set NODE_ENV=developing&& mocha src/**/*spec.js --opts mocha.opts",
     "mocha:watch": "mocha src/**/*spec.js --opts mocha.opts --watch --bail",
     "linter": "eslint src --fix --ext .js,.jsx",
     "build": "npm test && rm -r build && babel src --presets es2015,react,stage-0 --ignore __tests__ -d build && cp -t build/ package.json README.md"
@@ -21,6 +23,7 @@
   "homepage": "https://github.com/codevcode/coact-utils#readme",
   "dependencies": {
     "lodash": "^4.17.4",
+    "react-test-renderer": "^15.5.4",
     "recompose": "^0.23.4"
   },
   "devDependencies": {
@@ -39,7 +42,6 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-test-render": "^1.0.3",
     "sinon": "^2.2.0"
   },
   "peerDependencies": {
