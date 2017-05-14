@@ -5,11 +5,11 @@ import apply from '../applyMiddlewares'
 const { strictEqual: is, deepEqual: deep } = assert
 const { spy } = sinon
 
-describe('applyMiddlewares', function () {
-  it('is a function', function () {
+describe('applyMiddlewares', () => {
+  it('is a function', () => {
     is(typeof apply, 'function')
   })
-  it('can wrap handlers up in middlewares', function () {
+  it('can wrap handlers up in middlewares', () => {
     const save = spy()
     const props = { save }
 
@@ -23,7 +23,7 @@ describe('applyMiddlewares', function () {
     is(save.callCount, 1)
     deep(save.getCall(0).args, ['data', 'options'])
   })
-  it('passing args through next', function () {
+  it('passing args through next', () => {
     const handler = spy(value => 2 * value)
     const upstreamProps = { handler, value: 1 }
 
@@ -38,7 +38,7 @@ describe('applyMiddlewares', function () {
     deep(handler.getCall(0).args, [3])
     deep(result, 6)
   })
-  it('compose middlewares', function () {
+  it('compose middlewares', () => {
     const handler = spy(value => 2 * value)
     const upstreamProps = { handler, value: 1 }
 
