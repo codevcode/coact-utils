@@ -3,6 +3,8 @@ import getDisplayName from 'recompose/getDisplayName'
 
 // ISSUE: withArgs 容易忘記加
 function setWrappedDisplayName (enhancer, name, withArgs = false) {
+  // if (process.env.NODE_ENV === 'production') return enhancer
+
   if (withArgs) {
     return (...args) => BaseComp => {
       const Comp = enhancer(...args)(BaseComp)
