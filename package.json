@@ -9,6 +9,7 @@
     "mocha:pdt": "set NODE_ENV=production&& mocha src/**/*spec.js --opts mocha.opts",
     "mocha:dev": "set NODE_ENV=developing&& mocha src/**/*spec.js --opts mocha.opts",
     "mocha:watch": "mocha src/**/*spec.js --opts mocha.opts --watch --bail",
+    "mocha:only": "mocha --opts mocha.opts --watch --bail",
     "linter": "eslint src --fix --ext .js,.jsx",
     "build": "npm test && rm -rf build && babel src --presets env,react,stage-0 --ignore __tests__ -d build && cp -t build/ package.json README.md"
   },
