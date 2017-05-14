@@ -10,14 +10,14 @@ const { strictEqual: is } = assert
 
 const { createElement: el, Component: Comp } = React
 
-describe('setWrappedDisplayName', function () {
-  it('is a function', function () {
+describe('setWrappedDisplayName', () => {
+  it('is a function', () => {
     is(typeof setWrappedDisplayName, 'function')
   })
 
   if (process.env.NODE_ENV !== 'production') {
     // console.log('developing env')
-    it('wrap BaseComponent with the enhancer name', function () {
+    it('wrap BaseComponent with the enhancer name', () => {
       const FuncComp = () => el('div')
       is(FuncComp.displayName, undefined)
       is(FuncComp.name, 'FuncComp')
@@ -39,7 +39,7 @@ describe('setWrappedDisplayName', function () {
       is(namedEnhancer(FuncComp).displayName, 'name(FuncComp)')
       is(namedEnhancer(ClassComp).displayName, 'name(MyComp)')
     })
-    it('enhancer with args', function () {
+    it('enhancer with args', () => {
       const FuncComp = () => el('div')
 
       const enhancer = (arg) => compose(
@@ -53,7 +53,7 @@ describe('setWrappedDisplayName', function () {
     })
   } else {
     // console.log('production env')
-    it('recompose does not set displayName in production mode', function () {
+    it('recompose does not set displayName in production mode', () => {
       const FuncComp = () => el('div')
       is(FuncComp.displayName, undefined)
       is(FuncComp.name, 'FuncComp')
@@ -75,7 +75,7 @@ describe('setWrappedDisplayName', function () {
       is(namedEnhancer(FuncComp).displayName, 'name(FuncComp)')
       is(namedEnhancer(ClassComp).displayName, 'name(MyComp)')
     })
-    it('enhancer with args', function () {
+    it('enhancer with args', () => {
       const FuncComp = () => el('div')
 
       const enhancer = (arg) => compose(

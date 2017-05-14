@@ -5,7 +5,7 @@ const { spy } = sinon
 
 const { makeHandlerCreator } = test
 
-describe('modifyUpdatingValue', function () {
+describe('modifyUpdatingValue', () => {
   function tester ({ init, upstreamProps, makeModifier, updater }) {
     let value = init
     const onChange = spy(input => {
@@ -34,7 +34,7 @@ describe('modifyUpdatingValue', function () {
       onChange,
     }
   }
-  it('add a modifier returns new value before `onChange`', function () {
+  it('add a modifier returns new value before `onChange`', () => {
     const result = tester({
       makeModifier: () => v => v + 1,
       updater: 0,
@@ -47,7 +47,7 @@ describe('modifyUpdatingValue', function () {
     deep(modifier.getCall(0).args[0], 0)
     is(changedValue, 1)
   })
-  it('passing updater', function () {
+  it('passing updater', () => {
     const updater = spy(v => 2 * v)
     const result = tester({
       init: 1,
@@ -61,7 +61,7 @@ describe('modifyUpdatingValue', function () {
     deep(updater.getCall(0).args[0], 1)
     deep(changedValue, 3)
   })
-  it('modifier from props', function () {
+  it('modifier from props', () => {
     const result = tester({
       upstreamProps: { parser: v => +v },
       makeModifier: ({ parser }) => parser,
@@ -72,7 +72,7 @@ describe('modifyUpdatingValue', function () {
 
     deep(changedValue, 1)
   })
-  it('apply twice', function () {
+  it('apply twice', () => {
     let value = null
     let onChange = spy(input => {
       if (typeof input === 'function') {
@@ -95,7 +95,7 @@ describe('modifyUpdatingValue', function () {
 
     is(value, 2)
   })
-  it('modifier can get old value', function () {
+  it('modifier can get old value', () => {
     const result = tester({
       init: 1,
       upstreamProps: { addOld: (value, old) => (value + old) },
