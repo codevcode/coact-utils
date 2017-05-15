@@ -4,7 +4,7 @@ import memoize from 'lodash/memoize'
 function isNil (value) {
   return value === undefined || value === null
 }
-function cloneObject (obj) {
+function sallowCopy (obj) {
   return Array.isArray(obj) ? [...obj] : { ...obj }
 }
 function toUpdateFunc (input) {
@@ -29,7 +29,7 @@ const splitUpdater = updater => (key, emptyObj = { }) => {
     return updater(
       (obj) => Object.assign(
         // Creates or clones an object for updating
-        isNil(obj) ? emptyObj : cloneObject(obj),
+        isNil(obj) ? emptyObj : sallowCopy(obj),
         // An object with new partial value
         { [key]: toUpdateFunc(input)(obj && obj[key]) }
       ),
@@ -62,7 +62,7 @@ export default memoizedSplitUpdater
  *  Another implemntation for creating a partial update function
  */
       // (obj) => {
-      //   const updatedObj = isNil(obj) ? emptyObj : cloneObject(obj)
+      //   const updatedObj = isNil(obj) ? emptyObj : sallowCopy(obj)
       //   updatedObj[key] = toUpdateFunc(input)(updatedObj[key])
       //   return updatedObj
       // },
