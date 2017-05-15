@@ -6,7 +6,7 @@ import compose from 'recompose/compose'
 import setPropTypes from 'recompose/setPropTypes'
 import withPropsOnChange from 'recompose/withPropsOnChange'
 
-import setEnhancerName from './setEnhancerName'
+import setWrappedDisplayName from './setWrappedDisplayName'
 
 
 function mixSpliter (spliter, thisSpliter) {
@@ -43,4 +43,4 @@ const enhancer = thisSpliter => compose(
 )
 
 
-export default setEnhancerName(enhancer, 'mixSpliter', true)
+export default setWrappedDisplayName(enhancer, 'mixSpliter', true)
