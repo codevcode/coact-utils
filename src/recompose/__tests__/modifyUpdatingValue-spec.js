@@ -6,14 +6,15 @@ const { spy } = sinon
 const { makeHandlerCreator } = test
 
 describe('modifyUpdatingValue', () => {
-  function tester ({ init, upstreamProps, makeModifier, updater }) {
+  function tester ({ init, upstreamProps, makeModifier, input, callback }) {
     let value = init
-    const onChange = spy(input => {
-      if (typeof input === 'function') {
-        value = input(value)
+    const onChange = spy((inp, cb) => {
+      if (typeof inp === 'function') {
+        value = inp(value)
       } else {
-        value = input
+        value = inp
       }
+      if (cb) cb()
     })
 
     let modifier = null
@@ -26,7 +27,7 @@ describe('modifyUpdatingValue', () => {
     const props = { ...upstreamProps, onChange }
     const revisedOnChange = makeHandlerCreator(spiedMakeModifier, 'onChange')(props)
 
-    revisedOnChange(updater)
+    revisedOnChange(input, callback)
 
     return {
       changedValue: value,
@@ -37,7 +38,7 @@ describe('modifyUpdatingValue', () => {
   it('add a modifier returns new value before `onChange`', () => {
     const result = tester({
       makeModifier: () => v => v + 1,
-      updater: 0,
+      input: 0,
     })
 
     const { modifier, onChange, changedValue } = result
@@ -47,25 +48,25 @@ describe('modifyUpdatingValue', () => {
     deep(modifier.getCall(0).args[0], 0)
     is(changedValue, 1)
   })
-  it('passing updater', () => {
-    const updater = spy(v => 2 * v)
+  it('passing input', () => {
+    const input = spy(v => 2 * v)
     const result = tester({
       init: 1,
       makeModifier: () => v => v + 1,
-      updater,
+      input,
     })
 
     const { changedValue } = result
 
-    is(updater.callCount, 1)
-    deep(updater.getCall(0).args[0], 1)
+    is(input.callCount, 1)
+    deep(input.getCall(0).args[0], 1)
     deep(changedValue, 3)
   })
   it('modifier from props', () => {
     const result = tester({
       upstreamProps: { parser: v => +v },
       makeModifier: ({ parser }) => parser,
-      updater: '1',
+      input: '1',
     })
 
     const { changedValue } = result
@@ -100,11 +101,25 @@ describe('modifyUpdatingValue', () => {
       init: 1,
       upstreamProps: { addOld: (value, old) => (value + old) },
       makeModifier: ({ addOld }) => addOld,
-      updater: 2,
+      input: 2,
     })
 
     const { changedValue } = result
 
     deep(changedValue, 3)
+  })
+  it('passthrough input callback', function () {
+    const callback = spy()
+    const result = tester({
+      init: 1,
+      makeModifier: () => v => v + 1,
+      input: 2,
+      callback,
+    })
+
+    const { changedValue } = result
+
+    deep(changedValue, 3)
+    is(callback.callCount, 1)
   })
 })

@@ -33,14 +33,14 @@ function toUpdater (input) {
   return (typeof input === 'function') ? input : () => input
 }
 function makeHandlerCreator (makeModifier, name) {
-  return props => input => {
+  return props => (input, callback) => {
     const updater = props[name]
     if (process.env.NODE_ENV !== 'production') checkUpdater(updater)
 
     const modifier = makeModifier(props)
     if (process.env.NODE_ENV !== 'production') checkModifier(modifier)
 
-    updater(value => modifier(toUpdater(input)(value), value))
+    updater(value => modifier(toUpdater(input)(value), value), callback)
 
     /* another implementation, performance? */
     // if (typeof updater === 'function') {
