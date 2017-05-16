@@ -1,5 +1,6 @@
 import { test } from '../modifyUpdatingValue'
 
+
 const { strictEqual: is, deepEqual: deep } = assert
 const { spy } = sinon
 

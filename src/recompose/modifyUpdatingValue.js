@@ -29,7 +29,7 @@ function checkModifier (modifier) {
   }
 }
 
-function toUpdater (input) {
+function toFunc (input) {
   return (typeof input === 'function') ? input : () => input
 }
 function makeHandlerCreator (makeModifier, name) {
@@ -40,7 +40,7 @@ function makeHandlerCreator (makeModifier, name) {
     const modifier = makeModifier(props)
     if (process.env.NODE_ENV !== 'production') checkModifier(modifier)
 
-    updater(value => modifier(toUpdater(input)(value), value), callback)
+    updater(value => modifier(toFunc(input)(value), value), callback)
 
     /* another implementation, performance? */
     // if (typeof updater === 'function') {
@@ -52,6 +52,7 @@ function makeHandlerCreator (makeModifier, name) {
 }
 const mapValuesWithKey = mapValues.convert({ cap: false })
 const modifyUpdatingValue = mapValuesWithKey(makeHandlerCreator)
+
 
 export default modifyUpdatingValue
 

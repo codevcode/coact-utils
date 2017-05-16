@@ -2,6 +2,7 @@ import compose from 'recompose/compose'
 
 import apply from '../applyMiddlewares'
 
+
 const { strictEqual: is, deepEqual: deep } = assert
 const { spy } = sinon
 
