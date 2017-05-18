@@ -4,7 +4,7 @@ import setWrappedDisplayName from './setWrappedDisplayName'
 
 
 const enhancer = propName => mapProps(props => ({
-  ...props[propName],
+  ...(props[propName] || {}),
   ...props,
 }))
 
