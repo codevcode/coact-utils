@@ -4,6 +4,13 @@ import wrapDisplayName from 'recompose/wrapDisplayName'
 import createEagerFactory from 'recompose/createEagerFactory'
 
 
+function initState (getStateByProps, props) {
+  if (typeof getStateByProps !== 'function') return getStateByProps
+
+  const stateValue = getStateByProps(props)
+  return (typeof stateValue === 'function') ? stateValue() : stateValue
+}
+
 const withStateByProps = (
   stateName,
   stateUpdaterName,
@@ -16,19 +23,16 @@ const withStateByProps = (
 
       if (typeof getStateByProps === 'function') {
         this.componentWillReceiveProps = (nextProps) => {
-          getStateByProps(nextProps, {
-            ...this.props,
-            [stateName]: this.state.stateValue,
-            [stateUpdaterName]: this.updateStateValue,
-          })
+          const nextState = getStateByProps(nextProps, this.props)
+          if (nextState !== undefined) {
+            this.updateStateValue(nextState)
+          }
         }
       }
     }
 
     state = {
-      stateValue: typeof getStateByProps === 'function'
-        ? getStateByProps(this.props)
-        : getStateByProps,
+      stateValue: initState(getStateByProps, this.props),
     }
 
     updateStateValue = (updateFn, callback) =>
