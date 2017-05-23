@@ -21,7 +21,7 @@ const enhancer = (updaterName, input) => {
   }
 
   return withHandlers(modifyUpdatingValue({
-    [updaterName]: () => input, // input as modifier
+    [updaterName]: input, // input as makeModifier
   }))
 }
 
