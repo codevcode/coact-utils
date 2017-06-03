@@ -60,6 +60,8 @@ export default memoizedSplitUpdater
 
 /**
  *  Another implemntation for creating a partial update function
+ *  It give a chance to check if new value is the same as old value
+ *  Maybe not call updater if value not change?
  */
       // (obj) => {
       //   const updatedObj = isNil(obj) ? emptyObj : sallowCopy(obj)
