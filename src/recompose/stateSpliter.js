@@ -3,8 +3,9 @@ import splitUpdater from './splitUpdater'
 
 function stateSpliter (state, updater) {
   return function linkState (key, init, stateName = 'value', updaterName = 'onChange') {
+    const { [key]: subState = init } = state
     return {
-      [stateName]: state[key] || init,
+      [stateName]: subState,
       [updaterName]: splitUpdater(updater)(key),
     }
   }
