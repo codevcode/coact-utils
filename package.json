@@ -11,7 +11,7 @@
     "mocha:watch": "mocha src/**/*spec.js --opts mocha.opts --watch --bail",
     "mocha:only": "mocha --opts mocha.opts --watch --bail",
     "linter": "eslint src --fix --ext .js,.jsx",
-    "babel": "babel src/* --presets env,react,stage-0 --ignore __tests__ -d build",
+    "babel": "babel src --presets env,react,stage-0 --ignore __tests__ -d build",
     "build": "bash ./bin/build.sh"
   },
   "repository": {
