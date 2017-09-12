@@ -10,10 +10,10 @@ const enhancer = (eventName, listener) => BaseComponent => {
       super(props, context)
     }
     componentDidMount () {
-      this.props.emitter.addListener(eventName, listener)
+      this.context.emitter.addListener(eventName, listener)
     }
     componentWillUnmount () {
-      this.props.emitter.removeListener(eventName, listener)
+      this.context.emitter.removeListener(eventName, listener)
     }
     render () {
       return React.createElement(BaseComponent, this.props)
