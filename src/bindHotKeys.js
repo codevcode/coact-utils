@@ -3,19 +3,29 @@ import PropTypes from 'prop-types'
 
 import pick from 'lodash/fp/pick'
 import mapValues from 'lodash/fp/mapValues'
+import compose from 'lodash/fp/compose'
 
 import { HotKeys } from 'react-hotkeys'
 
 import setWrappedDisplayName from './setWrappedDisplayName'
 
 
+const makeBuildHandlers = keyMap => compose(
+  mapValues(handler => event => {
+    event.stopPropagation()
+    handler()
+    return false
+  }),
+  compose(pick, Object.keys)(keyMap),
+)
+
 const { createElement: element } = React
 const { func } = PropTypes
 const enhancer = keyMap => BaseComponent => {
-  const pickHandlers = pick(Object.keys(keyMap))
+  const buildHandlers = makeBuildHandlers(keyMap)
 
   const BindHotKeys = props => (
-    element(HotKeys, { keyMap, handlers: pickHandlers(props) },
+    element(HotKeys, { keyMap, handlers: buildHandlers(props) },
       element(BaseComponent, props),
     )
   )
@@ -27,3 +37,6 @@ const enhancer = keyMap => BaseComponent => {
 
 
 export default setWrappedDisplayName(enhancer, 'bindHotKeys', true)
+
+const forTesting = { makeBuildHandlers }
+export { forTesting }
